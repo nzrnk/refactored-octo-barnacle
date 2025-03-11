@@ -1,0 +1,26 @@
+{
+  "name": "refactored-octo-barnacle",
+  "version": "1.0.0",
+  "description": "Репозиторий для проекта apichallenges.herokuapp.com",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzrnk/refactored-octo-barnacle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nzrnk/refactored-octo-barnacle/issues"
+  },
+  "homepage": "https://github.com/nzrnk/refactored-octo-barnacle#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.5"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.5.1"
+  }
+}
