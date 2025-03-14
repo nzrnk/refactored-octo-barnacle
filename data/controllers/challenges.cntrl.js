@@ -3,8 +3,8 @@ export class Challenges {
         this.request = request;
     }
 
-    async get(data) {
-        const response = await this.request.get('./challenges', {...data})
+    async get(options) {
+        const response = await this.request.get('./challenges', {...options})
         return response;
     }
 }

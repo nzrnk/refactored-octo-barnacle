@@ -1,12 +1,13 @@
 import { expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { test } from '../data/fixture/fixture';
-//import { oldTodos, oldToken } from '../data/olddata/old'; к 37 тесту
+import { newChallengeStatus, newGuid } from '../data/mocks/api.challenge'; 
 
 let xAuthToken;
 let todosDB;
 let todosSet;
 let inSystemXchallenger;
+let allTodos;
 
 
 test.describe('API challenge', ()=> {
@@ -20,9 +21,9 @@ test.describe('API challenge', ()=> {
                 headers: {
                 'x-challenger' : token,
             }});
-            const list = (await response.json()).challenges;
+            const body = (await response.json()).challenges;
             expect(response.status()).toBe(200);
-            expect(list).toHaveLength(59);
+            expect(body).toHaveLength(59);
         });
     });
 
@@ -33,9 +34,9 @@ test.describe('API challenge', ()=> {
                 'x-challenger' : token,
             }});
             
-            const list = (await response.json()).todos;
+            allTodos = (await response.json()).todos;
             expect(response.status()).toBe(200);
-            expect(list).toHaveLength(10);
+            expect(allTodos).toHaveLength(10);
             
         });
 
@@ -525,19 +526,20 @@ test.describe('API challenge', ()=> {
             expect(response.status()).toBe(200);
             expect(body).toHaveProperty('challengeStatus')
         })
-        /*todo тест проходит но не засчитывается
-        test.only('@PUT /challenger/guid CREATE', async({ challenger, token }) => { 
-            const response = await challenger.putGuid(oldToken, {
+        
+        test('@PUT /challenger/guid CREATE', async({ challenger }) => { 
+            console.log(newGuid);
+            const response = await challenger.putGuid(newGuid, {
                 headers: {
-                    'x-challenger' : token,
+                    'x-challenger' : newGuid,
                 },
-                data: oldTodos,
+                data: newChallengeStatus,
             })
-            console.log(await response.json())
-            //expect(response.status()).toBe(200);
-
-        })
-        */
+            const headers = (await response.headers())['x-challenger'];
+            expect(response.status()).toBe(201);
+            expect(headers).toContain(newGuid);
+        });
+        
         
         test('@GET /challenger/database/guid (200)', async({ challenger, token }) => {
             const response = await challenger.getDataBase(token, {
@@ -559,7 +561,6 @@ test.describe('API challenge', ()=> {
                 data: todosDB,
                 
             })
-            console.log(await response.text())
             const body = (await response.body()).data;
             expect(response.status()).toBe(204);
             expect(body).toBeFalsy()
@@ -820,57 +821,6 @@ test.describe('API challenge', ()=> {
         });
     });
 });
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
