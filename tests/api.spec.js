@@ -529,11 +529,13 @@ test.describe('API challenge', ()=> {
         
         test('@PUT /challenger/guid CREATE', async({ challenger }) => { 
             console.log(newGuid);
+            todosSet['xAuthToken'] = '';
+            todosSet['xChallenger'] = `${newGuid}`;
             const response = await challenger.putGuid(newGuid, {
                 headers: {
                     'x-challenger' : newGuid,
                 },
-                data: newChallengeStatus,
+                data: todosSet,
             })
             const headers = (await response.headers())['x-challenger'];
             expect(response.status()).toBe(201);
